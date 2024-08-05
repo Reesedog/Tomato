@@ -18,14 +18,14 @@ function TomatoApp() {
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if ((status == EnumStatus.Working) || (status == EnumStatus.Breaking)) {
+    if ((status === EnumStatus.Working) || (status === EnumStatus.Breaking)) {
       timer = setInterval(() => {
         setTimeLeft(prevTimeLeft => prevTimeLeft - 1);
       }, 1000);
     }
 
     return () => clearInterval(timer);
-  }, [status]);
+  }, [status, EnumStatus.Working, EnumStatus.Breaking]);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -40,7 +40,7 @@ function TomatoApp() {
         setTimerColor(`#3b9ed4`);
       }
     }
-  }, [timeLeft]);
+  }, [timeLeft, status, EnumStatus.Working, EnumStatus.Breaking]);
 
   const handleStartPause = () => {
     if (status === EnumStatus.Stopped) {
@@ -70,7 +70,7 @@ function TomatoApp() {
           text={`${String(Math.floor(timeLeft / 60)).padStart(2, '0')}:${String(timeLeft % 60).padStart(2, '0')}`}
         />
       </div>
-      <button onClick={handleStartPause} className="btn btn-ghost m-4">{status == EnumStatus.Stopped ? 'START' : 'STOP'}</button>
+      <button onClick={handleStartPause} className="btn btn-ghost m-4">{status === EnumStatus.Stopped ? 'START' : 'STOP'}</button>
     </div>
   );
 }
