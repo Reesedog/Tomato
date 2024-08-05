@@ -1,3 +1,4 @@
+import { stat } from 'fs';
 import React, { useState, useEffect } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -66,7 +67,7 @@ function TomatoApp() {
 
           })}
           value={timeLeft}
-          maxValue={WORK_TIME * 60}
+          maxValue={(status === EnumStatus.Breaking ? BREAK_TIME : WORK_TIME) * 60}
           text={`${String(Math.floor(timeLeft / 60)).padStart(2, '0')}:${String(timeLeft % 60).padStart(2, '0')}`}
         />
       </div>
